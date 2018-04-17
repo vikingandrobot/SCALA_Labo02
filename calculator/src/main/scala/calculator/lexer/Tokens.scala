@@ -19,8 +19,8 @@ object Tokens {
   case object EQSIGN extends TokenInfo with TokenClass    // =
   case object PLUS extends TokenInfo with TokenClass      // +
   case object MINUS extends TokenInfo with TokenClass     // -
-  case object LPAREN extends TokenInfo with TokenClass     // -
-  case object RPAREN extends TokenInfo with TokenClass     // -
+  case object LPAREN extends TokenInfo with TokenClass     // (
+  case object RPAREN extends TokenInfo with TokenClass     // )
   ???
 
   /** Token */
