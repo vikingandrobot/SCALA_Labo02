@@ -36,11 +36,15 @@ class Lexer (source:Source) {
         case '%' => setToken(MODULO)
         case '^' => setToken(POWER)
         case '!' => setToken(FACT)
-        case 'g' => setToken(GCD)
-        case 's' => setToken(SQRT)
-      //  case x if(numeric.contains(x)) => setToken(Tokens.NUM(x.toString))
-        //case y if(alphabetic.contains(y)) => setToken(Tokens.ID(y.toString))
-        case _ => setToken(BAD)    // mauvais
+        case '0' => setToken(NUM(ch.toString))
+        case x if (numeric.contains(x)) => setToken(NUM(readMultiple(numeric)))
+        case y if (alphabetic.contains(y)) => {
+          var s = readMultiple(alphanumeric)
+          var tokenInfo = keywordOrId(s)
+          if(tokenInfo == BAD) setToken(ID(s)) // cas variable
+          else setToken(tokenInfo)             // cas mot-clé
+        }
+        case _ => fatalError("Token doesn't exist")    // n'existe pas
       }
     }
   }
@@ -48,7 +52,9 @@ class Lexer (source:Source) {
   /** Checks and set if the multiple Char found is a keyword or a variable */
   def keywordOrId(str: String): TokenInfo = {
     str.toLowerCase match {
-      case _ => ???
+      case "gcd" => GCD
+      case "sqrt" => SQRT
+      case _ => BAD
     }
   }
 
@@ -65,7 +71,7 @@ class Lexer (source:Source) {
   def readMultiple(allowed: List[Char]): String = {
     var str = "" + ch
     nextChar
-    while (allowed.contains(ch) && !eof) {
+    while (allowed.contains(ch) && !eof && ch != ' ') {
       str += ch
       nextChar
     }
