@@ -34,10 +34,13 @@ object Tokens {
   case object RPAREN extends TokenInfo with TokenClass    // )
   case object VIRG extends TokenInfo with TokenClass      // ,
 
-  // todo Token avec paramètre => il faut surcharger la méthode toString ??? mais où
-  case object NUM extends TokenInfo with TokenClass       // NUM(valeur)
-  case object ID extends TokenInfo with TokenClass        // ID(valeur) variable
-
+  // Token avec paramètre
+  case class NUM (value:String) extends TokenInfo with TokenClass { // NUM(valeur)
+    override def toString: String = super.toString + "(" + value + ")"
+  }
+  case class ID(value:String) extends TokenInfo with TokenClass  {  // ID(valeur) variable
+    override def toString: String = super.toString + "(" + value + ")"
+  }
   /** Token */
   class Token(val info: TokenInfo) extends Positional {
     override def toString: String = info.toString

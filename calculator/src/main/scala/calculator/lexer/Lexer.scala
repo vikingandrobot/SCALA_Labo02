@@ -25,24 +25,22 @@ class Lexer (source:Source) {
       position = source.pos
       ch match {
         case ' ' => skipToken
-        case '(' => setToken(Tokens.LPAREN)
-        case ')' => setToken(Tokens.RPAREN)
-        case ',' => setToken(Tokens.VIRG)
-        case '=' => setToken(Tokens.EQSIGN)
-        case '+' => setToken(Tokens.PLUS)
-        case '-' => setToken(Tokens.MINUS)
-        case '*' => setToken(Tokens.MULT)
-        case '/' => setToken(Tokens.DIV)
-        case '%' => setToken(Tokens.MODULO)
-        case '^' => setToken(Tokens.POWER)
-        case '!' => setToken(Tokens.FACT)
-        case 'g' => setToken(Tokens.GCD)
-        case 's' => setToken(Tokens.SQRT)
-        // todo passer le paramètre de numérique
-        case x if(numeric.contains(x)) => setToken(Tokens.NUM)
-        // todo vérifier si c'est une variable et ajouter la valeur...
-       // case y if(keywordOrId(y)) => setToken(Tokens.ID)
-        case _ => setToken(Tokens.BAD)    // mauvais
+        case '(' => setToken(LPAREN)
+        case ')' => setToken(RPAREN)
+        case ',' => setToken(VIRG)
+        case '=' => setToken(EQSIGN)
+        case '+' => setToken(PLUS)
+        case '-' => setToken(MINUS)
+        case '*' => setToken(MULT)
+        case '/' => setToken(DIV)
+        case '%' => setToken(MODULO)
+        case '^' => setToken(POWER)
+        case '!' => setToken(FACT)
+        case 'g' => setToken(GCD)
+        case 's' => setToken(SQRT)
+      //  case x if(numeric.contains(x)) => setToken(Tokens.NUM(x.toString))
+        //case y if(alphabetic.contains(y)) => setToken(Tokens.ID(y.toString))
+        case _ => setToken(BAD)    // mauvais
       }
     }
   }
