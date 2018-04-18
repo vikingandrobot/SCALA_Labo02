@@ -24,7 +24,6 @@ object Tokens {
   case object DIV extends TokenInfo with TokenClass       // /
   case object MODULO extends TokenInfo with TokenClass    // %
   case object POWER extends TokenInfo with TokenClass     // ^
-  case object SQUARE extends TokenInfo with TokenClass    // ^2 todo on le garde ??
   case object FACT extends TokenInfo with TokenClass      // factoriel
   case object GCD extends TokenInfo with TokenClass       // gcd
   case object SQRT extends TokenInfo with TokenClass      // racine carré
