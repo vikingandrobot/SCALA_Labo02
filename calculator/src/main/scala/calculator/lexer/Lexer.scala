@@ -1,6 +1,5 @@
 package calculator.lexer
 
-import calculator.Calculator
 import scala.io.Source
 
 class Lexer (source:Source) {
@@ -37,10 +36,10 @@ class Lexer (source:Source) {
         case '^' => setToken(POWER)
         case '!' => setToken(FACT)
         case '0' => setToken(NUM(ch.toString))
-        case x if (numeric.contains(x)) => setToken(NUM(readMultiple(numeric)))
-        case y if (alphabetic.contains(y)) => {
-          var s = readMultiple(alphanumeric)
-          var tokenInfo = keywordOrId(s)
+        case x if numeric.contains(x) => setToken(NUM(readMultiple(numeric)))
+        case y if alphabetic.contains(y) => {
+          val s = readMultiple(alphanumeric)
+          val tokenInfo = keywordOrId(s)
           if(tokenInfo == BAD) setToken(ID(s)) // cas variable
           else setToken(tokenInfo)             // cas mot-clé
         }
@@ -71,7 +70,7 @@ class Lexer (source:Source) {
   def readMultiple(allowed: List[Char]): String = {
     var str = "" + ch
     nextChar
-    while (allowed.contains(ch) && !eof && ch != ' ') {
+    while (allowed.contains(ch) && !eof) {
       str += ch
       nextChar
     }
