@@ -53,25 +53,66 @@ class Parser(source:Source) extends Lexer(source:Source) {
   }
 
   private def parsePlusMinus: ExprTree = {
-    var e = parseSimpleExpr // You should modify this call, to respect operations priority !
+    var e = parseMultDiv
     while (currentToken.info == PLUS || currentToken.info == MINUS) {
       if (currentToken.info == PLUS) {
         eat(PLUS)
-        e = Plus(e, parseSimpleExpr) // You should modify this call, to respect operations priority !
+        e = Plus(e, parseMultDiv)
       } else {
-        ???
+        eat(MINUS)
+        e = Minus(e, parseMultDiv)
       }
     }
     e
   }
 
   // Implement the other grammar methods
-  ???
+  private def parseMultDiv: ExprTree = {
+    var e = parseModulo
+    while (currentToken.info == MULT || currentToken.info == DIV) {
+      if (currentToken.info == MULT) {
+        eat(MULT)
+        e = Mult(e, parseModulo)
+      } else {
+        eat(DIV)
+        e = Div(e, parseModulo)
+      }
+    }
+    e
+  }
+
+  private def parseModulo: ExprTree = {
+    var e = parsePower
+    while (currentToken.info == MODULO) {
+        eat(MODULO)
+        e = Modulo(e, parsePower)
+    }
+    e
+  }
+
+  private def parsePower: ExprTree = {
+    var e = parseFactorial
+    while (currentToken.info == POWER) {
+      eat(POWER)
+      e = Power(e, parseFactorial)
+    }
+    e
+  }
+
+  private def parseFactorial: ExprTree = {
+    var e = parseSimpleExpr
+    while (currentToken.info == FACT) {
+      eat(FACT)
+      e = Fact(e, parseSimpleExpr)
+    }
+    e
+  }
 
   private def parseSimpleExpr: ExprTree = {
     // Here you want to match simple expressions such as NUM(value) and parse them (for example with the parseExprTreeToken method).
     currentToken.info match {
       case LPAREN => parseParenthesis // Parenthesis
+      case VIRG => parseVirgule // Virgule
       case _      => expected(???)
     }
   }
@@ -86,6 +127,11 @@ class Parser(source:Source) extends Lexer(source:Source) {
     val ret = parsePlusMinus
     eat(RPAREN)
     ret
+  }
+
+  private def parseVirgule(): ExprTree = {
+    eat(VIRG)
+    return parsePlusMinus
   }
 }
 
