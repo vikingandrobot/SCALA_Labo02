@@ -37,12 +37,7 @@ class Lexer (source:Source) {
         case '!' => setToken(FACT)
         case '0' => setToken(NUM(ch.toString))
         case x if numeric.contains(x) => setToken(NUM(readMultiple(numeric)))
-        case y if alphabetic.contains(y) => {
-          val s = readMultiple(alphanumeric)
-          val tokenInfo = keywordOrId(s)
-          if(tokenInfo == BAD) setToken(ID(s)) // cas variable
-          else setToken(tokenInfo)             // cas mot-clé
-        }
+        case y if alphabetic.contains(y) => setToken(keywordOrId(readMultiple(alphanumeric)))
         case _ => fatalError("Token doesn't exist")    // n'existe pas
       }
     }
@@ -53,7 +48,7 @@ class Lexer (source:Source) {
     str.toLowerCase match {
       case "gcd" => GCD
       case "sqrt" => SQRT
-      case _ => BAD
+      case _ => ID(str)
     }
   }
 
