@@ -6,7 +6,9 @@ import calculator.parser.Parser
 class Calculator(source: Source) extends Parser (source:Source) {
 
 
-  def execute(): Unit = ???
+  def execute(): Unit = {
+    new Parser(source).printTree
+  }
 
 
 }

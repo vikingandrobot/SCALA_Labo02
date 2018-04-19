@@ -113,6 +113,10 @@ class Parser(source:Source) extends Lexer(source:Source) {
     currentToken.info match {
       case LPAREN => parseParenthesis // Parenthesis
       case VIRG => parseVirgule // Virgule
+      case NUM(x) => parseNum(x)
+      case ID(x) => parseID(x)
+      case GCD => ???
+      case SQRT => parseSQRT
       case _      => expected(???)
     }
   }
@@ -120,6 +124,24 @@ class Parser(source:Source) extends Lexer(source:Source) {
   private def parseExprTreeToken[T <: ExprTree](retTree: T): ExprTree = {
     readToken
     retTree
+  }
+
+  private def parseNum(value: String): ExprTree = {
+    eat(NUM(value))
+    val e = NumLit(value)
+    e
+  }
+
+  private def parseID(value: String): ExprTree = {
+    eat(ID(value))
+    val e = Identifier(value)
+    e
+  }
+
+  private def parseSQRT(): ExprTree = {
+    eat(SQRT)
+    val e = Sqrt(parsePlusMinus, Empty()) // TODO : Mabye set the value directly
+    e
   }
 
   private def parseParenthesis(): ExprTree = {
@@ -131,7 +153,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
 
   private def parseVirgule(): ExprTree = {
     eat(VIRG)
-    return parsePlusMinus
+    parsePlusMinus
   }
 }
 
