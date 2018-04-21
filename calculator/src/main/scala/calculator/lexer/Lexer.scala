@@ -36,8 +36,8 @@ class Lexer (source:Source) {
         case '^' => setToken(POWER)
         case '!' => setToken(FACT)
         case '0' => setToken(NUM(ch.toString))
-        case x if numeric.contains(x) => setToken(NUM(readMultiple(numeric)))
-        case y if alphabetic.contains(y) => setToken(keywordOrId(readMultiple(alphanumeric)))
+        case x if numeric.contains(x) => Token(NUM(readMultiple(numeric))).setPos(position)
+        case y if alphabetic.contains(y) => Token(keywordOrId(readMultiple(alphanumeric))).setPos(position)
         case _ => fatalError("Token doesn't exist")    // n'existe pas
       }
     }
