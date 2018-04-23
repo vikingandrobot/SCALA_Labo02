@@ -1,6 +1,7 @@
 package calculator.parser
 
 import calculator.Main.memory
+import calculator.lexer.Tokens.ID
 import calculator.utils.op
 import calculator.utils.gcd
 import calculator.utils.sqrt
@@ -11,7 +12,7 @@ object Trees {
   sealed trait ExprTree {
     @throws(classOf[Exception])
     def compute: Double = this match {
-      case Assign(l, r) => val value = r.compute; memory += (l.value -> value); Double.NegativeInfinity
+      case Assign(l, r) => Double.NegativeInfinity
       case Plus(l, r) => op('+', l.compute, r.compute)
       case Minus(l, r) => op('-', l.compute, r.compute)
       case Mult(l, r) => op('*', l.compute, r.compute)
@@ -23,8 +24,12 @@ object Trees {
       case Sqrt(l, Empty()) => sqrt(l.compute)
       case UnaryMinus(l, Empty()) => -(l.compute)
       case NumLit(x) => x.toDouble
-      case Identifier(id) => memory(id)
-      case _ => ???
+      case Identifier(id) => try {
+        memory(id)
+      } catch {
+        case ex: java.util.NoSuchElementException => throw new Error("Variable doesn't exist in memory.")
+      }
+      case _ => throw new Error("Unknown expression.")
     }
   }
 

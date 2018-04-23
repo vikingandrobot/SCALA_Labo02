@@ -9,8 +9,8 @@ package object utils {
     */
   def op(operator: Char, op :Double) : Double = {
     operator match {
-      case '!' => if (!op.isValidInt) throw new Error("Opérande invalide, doit être entier.") else factorial(op.toInt)
-      case _ => throw new Error("Opérateur inconnu.")
+      case '!' => if (!op.isValidInt) throw new Error("Invalid operation for factorial, operand must be an integer.") else factorial(op.toInt)
+      case _ => throw new Error("Unknown operator.")
     }
   }
   /**
@@ -25,10 +25,10 @@ package object utils {
       case '+' => op1 + op2
       case '-' => op1 - op2
       case '*' => op1 * op2
-      case '/' => op1 / op2
+      case '/' => if (op2 != 0) { op1 / op2 } else {throw new Error("Cannot divide by 0.")}
       case '%' => op1 % op2
-      case '^' =>  if (!op2.isValidInt) throw new Error("Opérande invalide, second opérande doit être entier.") else power(op1, op2.toInt)
-      case _ => throw new Error("Opérateur inconnu.")
+      case '^' =>  if (!op2.isValidInt) throw new Error("Invalid operation for power, second operand must be an integer.") else power(op1, op2.toInt)
+      case _ => throw new Error("Unknown operator.")
     }
   }
 
@@ -81,7 +81,7 @@ package object utils {
 
     n match{
       case 0.0 => 0.0
-      case x if(n < 0) => throw new Error("Opérande invalide, doit être positif")
+      case x if(n < 0) => throw new Error("Invalid argument for square root, must be positive.")
       case _ =>{
         calcSqrt(n, 1)
       }
@@ -96,7 +96,7 @@ package object utils {
     * @return factoriel de n
     */
   def factorial(n: Int): Int = {
-    if(n < 0) throw new Error("Opérande invalide, doit être positive")
+    if(n < 0) throw new Error("Invalid argument for factorial, must be positive.")
     def loop(acc: Int, n: Int) : Int = {
       if (n == 0) acc
       else loop(acc * n, n - 1)
@@ -113,35 +113,6 @@ package object utils {
     */
   def gcd(a: Int, b: Int) : Int =
     if (b == 0) a else gcd(b, a % b)
-
-
-  /*
-   * Mémoire de la machine
-   */
-  var memory: Map[String, Double] = Map()
-
-  /**
-    * Enregistrer une variable dans la mémoire.
-    * Lève une exception si le nom de la variable est invalide.
-    * @param variable nom de la variable
-    * @param value valeur de la variable
-    */
-  def saveVariable(variable: String, value: Double) : Unit = {
-    if (!variable.matches("[a-zA-Z]+")) {
-      throw new Error("Nom de variable invalide. Seulement a-zA-Z")
-    }
-    memory += variable -> value
-  }
-
-  /**
-  Récupérer la valeur d'une variable. Lève une exception
-  si la variable n'existe pas dans la mémoire.
-    * @param key nom de la variable
-    * @return valeur de la variable
-    */
-  def getVariable(key: String) : Double = {
-    memory(key)
-  }
 
 
   /**

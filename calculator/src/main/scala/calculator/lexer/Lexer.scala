@@ -73,6 +73,6 @@ class Lexer (source:Source) {
   }
 
   def fatalError(msg: String): Nothing = {
-    throw new Error("Fatal error: " + msg)
+    throw new Error(msg)
   }
 }

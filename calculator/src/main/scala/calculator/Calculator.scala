@@ -13,7 +13,7 @@ class Calculator(source: Source) extends Parser (source:Source) {
         case result => println("Result : " + result)
       }
     } catch {
-      case error: Error => println(error.getMessage)
+      case error: Error => println("Fatal error: " + error.getMessage)
     }
 
     //p.printTree

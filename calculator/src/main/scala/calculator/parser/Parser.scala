@@ -103,7 +103,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
     var e = parseSimpleExpr
     while (currentToken.info == FACT) {
       eat(FACT)
-      e = Fact(e, parseSimpleExpr)
+      e = Fact(e, Empty())
     }
     e
   }
@@ -163,7 +163,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
 
   private def parseSQRT(): ExprTree = {
     eat(SQRT)
-    val e = Sqrt(parsePlusMinus, Empty()) // TODO : Mabye set the value directly
+    val e = Sqrt(parsePlusMinus, Empty())
     e
   }
 
