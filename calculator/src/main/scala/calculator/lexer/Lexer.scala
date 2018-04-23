@@ -73,7 +73,6 @@ class Lexer (source:Source) {
   }
 
   def fatalError(msg: String): Nothing = {
-    println("Fatal error", msg)
-    sys.exit(1)
+    throw new Error("Fatal error: " + msg)
   }
 }

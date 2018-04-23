@@ -117,7 +117,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
       case ID(x) => parseID(x)
       case GCD => parseGCD
       case SQRT => parseSQRT
-      case _      => expected(???)
+      case _    => fatalError("Invalid token " + currentToken.toString)
     }
   }
 

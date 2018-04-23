@@ -1,10 +1,28 @@
 package calculator.parser
 
+import calculator.Main.memory
+import calculator.utils.op
+import calculator.utils.gcd
+import calculator.utils.sqrt
+import calculator.utils.factorial
+
 object Trees {
 
   sealed trait ExprTree {
     @throws(classOf[Exception])
     def compute: Double = this match {
+      case Assign(l, r) => val value = r.compute; memory += (l.value -> value); Double.NegativeInfinity
+      case Plus(l, r) => op('+', l.compute, r.compute)
+      case Minus(l, r) => op('-', l.compute, r.compute)
+      case Mult(l, r) => op('*', l.compute, r.compute)
+      case Div(l, r) => op('/', l.compute, r.compute)
+      case Modulo(l, r) => op('%', l.compute, r.compute)
+      case Power(l, r) => op('^', l.compute, r.compute)
+      case Gcd(l, r) => gcd(l.compute.toInt, r.compute.toInt)
+      case Fact(l, Empty()) => factorial(l.compute.toInt)
+      case Sqrt(l, Empty()) => sqrt(l.compute)
+      case NumLit(x) => x.toDouble
+      case Identifier(id) => memory(id)
       case _ => ???
     }
   }
