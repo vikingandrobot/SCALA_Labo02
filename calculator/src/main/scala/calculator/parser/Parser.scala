@@ -109,10 +109,10 @@ class Parser(source:Source) extends Lexer(source:Source) {
   }
 
   private def parseSimpleExpr: ExprTree = {
-    var nbMinus = 0
+    var isMinus = false
     if (currentToken.info == MINUS) {
       eat(MINUS)
-      nbMinus += 1
+      isMinus = true
     }
 
     var e : ExprTree = Empty()
@@ -128,7 +128,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
       case _    => fatalError("Invalid token " + currentToken.toString)
     }
 
-    for( i <- 0 until nbMinus){
+    if (isMinus) {
       e = UnaryMinus(e, Empty())
     }
     e

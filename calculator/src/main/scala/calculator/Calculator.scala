@@ -7,7 +7,6 @@ class Calculator(source: Source) extends Parser (source:Source) {
 
 
   def execute(): Unit = {
-    val p = new Parser(source)
     try {
       computeSource match {
         case Double.NegativeInfinity => println("Memory updated !")
