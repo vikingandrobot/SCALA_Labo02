@@ -21,6 +21,7 @@ object Trees {
       case Gcd(l, r) => gcd(l.compute.toInt, r.compute.toInt)
       case Fact(l, Empty()) => factorial(l.compute.toInt)
       case Sqrt(l, Empty()) => sqrt(l.compute)
+      case UnaryMinus(l, Empty()) => -(l.compute)
       case NumLit(x) => x.toDouble
       case Identifier(id) => memory(id)
       case _ => ???
@@ -39,6 +40,7 @@ object Trees {
   case class Gcd(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Fact(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Sqrt(lhs: ExprTree, rhs: ExprTree) extends ExprTree
+  case class UnaryMinus(lhs: ExprTree, rhs: ExprTree) extends ExprTree
 
 
   /** Leaves Expression Trees */

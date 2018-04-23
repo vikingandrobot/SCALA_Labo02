@@ -109,16 +109,29 @@ class Parser(source:Source) extends Lexer(source:Source) {
   }
 
   private def parseSimpleExpr: ExprTree = {
+    var nbMinus = 0
+    if (currentToken.info == MINUS) {
+      eat(MINUS)
+      nbMinus += 1
+    }
+
+    var e : ExprTree = Empty()
+
     // Here you want to match simple expressions such as NUM(value) and parse them (for example with the parseExprTreeToken method).
     currentToken.info match {
-      case LPAREN => parseParenthesis // Parenthesis
-      case VIRG => parseVirgule // Virgule
-      case NUM(x) => parseNum(x)
-      case ID(x) => parseID(x)
-      case GCD => parseGCD
-      case SQRT => parseSQRT
+      case LPAREN => e = parseParenthesis // Parenthesis
+      case VIRG => e = parseVirgule // Virgule
+      case NUM(x) => e = parseNum(x)
+      case ID(x) => e = parseID(x)
+      case GCD => e = parseGCD
+      case SQRT => e = parseSQRT
       case _    => fatalError("Invalid token " + currentToken.toString)
     }
+
+    for( i <- 0 until nbMinus){
+      e = UnaryMinus(e, Empty())
+    }
+    e
   }
 
   private def parseExprTreeToken[T <: ExprTree](retTree: T): ExprTree = {
