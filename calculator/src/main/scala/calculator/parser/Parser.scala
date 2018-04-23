@@ -115,7 +115,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
       case VIRG => parseVirgule // Virgule
       case NUM(x) => parseNum(x)
       case ID(x) => parseID(x)
-      case GCD => ???
+      case GCD => parseGCD
       case SQRT => parseSQRT
       case _      => expected(???)
     }
@@ -135,6 +135,16 @@ class Parser(source:Source) extends Lexer(source:Source) {
   private def parseID(value: String): ExprTree = {
     eat(ID(value))
     val e = Identifier(value)
+    e
+  }
+
+  private def parseGCD(): ExprTree = {
+    eat(GCD)
+    eat(LPAREN)
+    val ret = parsePlusMinus
+    eat(VIRG)
+    val e = Gcd(ret, parsePlusMinus)
+    eat(RPAREN)
     e
   }
 
