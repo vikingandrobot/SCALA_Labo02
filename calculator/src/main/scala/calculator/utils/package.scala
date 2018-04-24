@@ -1,5 +1,14 @@
+/**
+  * File: utils/package.scala
+  * Authors: Sathiya Kirushnapillai, Mathieu Monteverde, Michela Zucca
+  * Date: 24 avril 2018
+  */
+
 package calculator
 
+/**
+  * This package defines various utility functions for the Calculator.
+  */
 package object utils {
   /**
     * Opération à un opérande
