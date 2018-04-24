@@ -10,6 +10,14 @@ import calculator.Main.memory
 import calculator.lexer._
 import scala.io.Source
 
+
+/**
+  * We completed this gile mainly by completing the parsing method for each
+  * operations. The parsing methods are listed by priority order from less
+  * to most.
+  *
+  * @param source the source to read from
+  */
 class Parser(source:Source) extends Lexer(source:Source) {
 
 
@@ -32,12 +40,26 @@ class Parser(source:Source) extends Lexer(source:Source) {
   /** Complains that what was found was not expected. The method accepts arbitrarily many arguments of type TokenClass */
   private def expected(tokenClass: TokenClass, more: TokenClass*): Nothing = fatalError("expected: " + (tokenClass :: more.toList).mkString(" or ") + ", found: " + currentToken)
 
+  /**
+    * parse an expression. As the calculator is only supposed to process
+    * on calculation and return the result we create a tree using the parseEquals
+    * method and then expect a EOF Token. This prevents the user from
+    * writing two calculation separated by spaces, for example 2+2    2+2
+    *
+    * @return the ExprTree representing the calculation
+    */
   private def parseExpr: ExprTree = {
     val e = parseEquals
     eat(EOF)
     e
   }
 
+  /**
+    * This method was provided. It already assigns the value to the variable
+    * in memory, so we didn't change that.
+    *
+    * @return the ExprTree representing the calculation
+    */
   private def parseEquals: ExprTree = {
     val e = parsePlusMinus
     if (currentToken.info == EQSIGN) {
@@ -60,6 +82,15 @@ class Parser(source:Source) extends Lexer(source:Source) {
     }
   }
 
+  /**
+    * Parses the addition and subtraction operations.
+    * This method calls the parseMultDiv method. Then if it finds a plus operator
+    * (or a minus operator), it will place the resulting ExprTree to the left of a
+    * Plus instance (or a Minus instance) and call parseMultDiv to parse the right
+    * side of the operator.
+    *
+    * @return an ExprTree representing the calculation
+    */
   private def parsePlusMinus: ExprTree = {
     var e = parseMultDiv
     while (currentToken.info == PLUS || currentToken.info == MINUS) {
@@ -74,7 +105,14 @@ class Parser(source:Source) extends Lexer(source:Source) {
     e
   }
 
-  // Implement the other grammar methods
+  /**
+    * Parses the mutliplication and division operations.
+    * This method calls the parseModulo method to compute the left tree and
+    * then places it in a Mult or Div tree on the left. It then calls the parseModulo
+    * method again to parse the right tree.
+    *
+    * @return an ExprTree representing the calculation
+    */
   private def parseMultDiv: ExprTree = {
     var e = parseModulo
     while (currentToken.info == MULT || currentToken.info == DIV) {
