@@ -8,21 +8,29 @@ package calculator.lexer
 
 import calculator.Positional
 
+/**
+  * We completed this file by adding the declarations for the possible
+  * types of Tokens.
+  *
+  * We used case objects when possible and case class for Token
+  * that need parameters to mean something (numeric literals and identifiers).
+  */
 object Tokens {
 
   sealed trait TokenClass {
-    def tokenClass: this.type = this // constructeur
+    def tokenClass: this.type = this // Constructor
   }
 
   sealed trait TokenInfo {
-    def tokenClass: TokenClass  // constructeur
+    def tokenClass: TokenClass  // Constructor
   }
 
   /** Tokens */
   case object BAD extends TokenInfo with TokenClass       // represents incorrect tokens.
   case object EOF extends TokenInfo with TokenClass       // represents end of file
   /** Insert other Tokens here */
-  // Opérateurs
+
+  /** Operators **/
   case object EQSIGN extends TokenInfo with TokenClass    // =
   case object PLUS extends TokenInfo with TokenClass      // +
   case object MINUS extends TokenInfo with TokenClass     // -
@@ -30,21 +38,23 @@ object Tokens {
   case object DIV extends TokenInfo with TokenClass       // /
   case object MODULO extends TokenInfo with TokenClass    // %
   case object POWER extends TokenInfo with TokenClass     // ^
-  case object FACT extends TokenInfo with TokenClass      // factoriel
-  case object GCD extends TokenInfo with TokenClass       // gcd
-  case object INVMOD extends TokenInfo with TokenClass       // gcd
-  case object SQRT extends TokenInfo with TokenClass      // racine carré
+  case object FACT extends TokenInfo with TokenClass      // factorial
+  case object GCD extends TokenInfo with TokenClass       // Greatest common divisor
+  case object INVMOD extends TokenInfo with TokenClass    // Modular invese
+  case object SQRT extends TokenInfo with TokenClass      // Square root
 
-  // Contrôles
+  /** Controls **/
   case object LPAREN extends TokenInfo with TokenClass    // (
   case object RPAREN extends TokenInfo with TokenClass    // )
   case object VIRG extends TokenInfo with TokenClass      // ,
 
-  // Token avec paramètre
-  case class NUM (value:String) extends TokenInfo with TokenClass { // NUM(valeur)
+  /** Token with parameters **/
+  /** Numeric literals **/
+  case class NUM (value:String) extends TokenInfo with TokenClass {
     override def toString: String =  "NUM(" + value + ")"
   }
-  case class ID(value:String) extends TokenInfo with TokenClass  {  // ID(valeur) variable
+  /** Identifiers **/
+  case class ID(value:String) extends TokenInfo with TokenClass  {
     override def toString: String = "ID(" + value + ")"
   }
   /** Token */
