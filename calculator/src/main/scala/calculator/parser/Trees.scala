@@ -13,6 +13,22 @@ import calculator.utils.sqrt
 import calculator.utils.factorial
 import calculator.utils.modInvert
 
+/**
+  * We completed this file by adding the declarations for the ExprTree
+  * case classes.
+  *
+  * The majority has a left tree child and a right tree child. Others
+  * such as Sqrt (square root) or Fact (factorial) only have one operand
+  * and can contain a sub tree as a child.
+  *
+  * We tried reusing the functions defined in the previous practical work
+  * as much as possible. This allowed us to rely on exceptions thrown
+  * by the utility functions to detect errors (such as negative square roots).
+  *
+  * The only exception is the usage of the memory which is stored in the Calculator
+  * class. We decided to handle the possible exception of noSuchElementException
+  * by throwing an error to display higher in the stack.
+  */
 object Trees {
 
   sealed trait ExprTree {
@@ -27,9 +43,9 @@ object Trees {
       case Power(l, r) => op('^', l.compute, r.compute)
       case Gcd(l, r) => gcd(l.compute.toInt, r.compute.toInt)
       case InvMod(l, r) => modInvert(l.compute.toInt, r.compute.toInt)
-      case Fact(l, Empty()) => factorial(l.compute.toInt)
-      case Sqrt(l, Empty()) => sqrt(l.compute)
-      case UnaryMinus(l, Empty()) => -(l.compute)
+      case Fact(c) => factorial(c.compute.toInt)
+      case Sqrt(c) => sqrt(c.compute)
+      case UnaryMinus(c) => -(c.compute)
       case NumLit(x) => x.toDouble
       case Identifier(id) => try {
         memory(id)
@@ -51,15 +67,12 @@ object Trees {
   case class Power(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Gcd(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class InvMod(lhs: ExprTree, rhs: ExprTree) extends ExprTree
-  case class Fact(lhs: ExprTree, rhs: ExprTree) extends ExprTree
-  case class Sqrt(lhs: ExprTree, rhs: ExprTree) extends ExprTree
-  case class UnaryMinus(lhs: ExprTree, rhs: ExprTree) extends ExprTree
+  case class Fact(child: ExprTree) extends ExprTree
+  case class Sqrt(child: ExprTree) extends ExprTree
+  case class UnaryMinus(child: ExprTree) extends ExprTree
 
 
   /** Leaves Expression Trees */
-  case class Empty() extends ExprTree {
-    override def toString: String = "Empty('')"
-  }
   case class NumLit(value: String) extends ExprTree
   case class Identifier(value: String) extends ExprTree {
     override def toString: String = "Identifier('" + value + "')"

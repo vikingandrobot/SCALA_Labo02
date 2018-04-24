@@ -111,7 +111,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
     var e = parseSimpleExpr
     while (currentToken.info == FACT) {
       eat(FACT)
-      e = Fact(e, Empty())
+      e = Fact(e)
     }
     e
   }
@@ -123,7 +123,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
       isMinus = true
     }
 
-    var e : ExprTree = Empty()
+    var e : ExprTree = null
 
     // Here you want to match simple expressions such as NUM(value) and parse them (for example with the parseExprTreeToken method).
     currentToken.info match {
@@ -138,7 +138,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
     }
 
     if (isMinus) {
-      e = UnaryMinus(e, Empty())
+      e = UnaryMinus(e)
     }
     e
   }
@@ -182,7 +182,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
 
   private def parseSQRT(): ExprTree = {
     eat(SQRT)
-    val e = Sqrt(parsePlusMinus, Empty())
+    val e = Sqrt(parsePlusMinus)
     e
   }
 
