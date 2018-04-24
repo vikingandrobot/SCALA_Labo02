@@ -36,10 +36,10 @@ object Tokens {
 
   // Token avec paramètre
   case class NUM (value:String) extends TokenInfo with TokenClass { // NUM(valeur)
-    override def toString: String = super.toString + "(" + value + ")"
+    override def toString: String =  "NUM(" + value + ")"
   }
   case class ID(value:String) extends TokenInfo with TokenClass  {  // ID(valeur) variable
-    override def toString: String = super.toString + "(" + value + ")"
+    override def toString: String = "ID(" + value + ")"
   }
   /** Token */
   class Token(val info: TokenInfo) extends Positional {

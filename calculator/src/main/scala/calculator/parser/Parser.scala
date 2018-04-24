@@ -27,7 +27,9 @@ class Parser(source:Source) extends Lexer(source:Source) {
   private def expected(tokenClass: TokenClass, more: TokenClass*): Nothing = fatalError("expected: " + (tokenClass :: more.toList).mkString(" or ") + ", found: " + currentToken)
 
   private def parseExpr: ExprTree = {
-    parseEquals
+    val e = parseEquals
+    eat(EOF)
+    e
   }
 
   private def parseEquals: ExprTree = {
