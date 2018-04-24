@@ -8,6 +8,12 @@ package calculator.lexer
 
 import scala.io.Source
 
+/**
+  * We completed this file mainly by adding the possible patterns to the case match
+  * inside the nextToken method.
+  *
+  * @param source the source to read from
+  */
 class Lexer (source:Source) {
 
   import Tokens._
