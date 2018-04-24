@@ -11,7 +11,13 @@ import calculator.parser.Parser
 
 class Calculator(source: Source) extends Parser (source:Source) {
 
-
+  /**
+    * Execute the calculator on source. THe method calls the computeSource method
+    * and displays the result (memory updated or calculation result).
+    *
+    * If an error occurs such as the expression is not a legal expression, the Error
+    * is caught and the message is displayed.
+    */
   def execute(): Unit = {
     try {
       computeSource match {
@@ -21,8 +27,6 @@ class Calculator(source: Source) extends Parser (source:Source) {
     } catch {
       case error: Error => println("Fatal error: " + error.getMessage)
     }
-
-    //p.printTree
   }
 
 

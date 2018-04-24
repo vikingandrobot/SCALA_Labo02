@@ -59,6 +59,7 @@ object Main {
     println("Functions:")
     println("   gcd(x, y) : Greatest common divisor, for example: gcd(4, 8)")
     println("   sqrt(x, y) : Square root, for example: sqrt(4)")
+    println("   invmod(x, y) : Modular inverse, for example: invmod(4, 11)")
     println("")
     println("Notes:")
     println("   This calculator doesn't support decimal numbers in calculations. Sorry.")
