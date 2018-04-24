@@ -1,3 +1,9 @@
+/**
+  * File: Tokens.scala
+  * Modified by: Sathiya Kirushnapillai, Mathieu Monteverde, Michela Zucca
+  * Date: 24 avril 2018
+  */
+
 package calculator.lexer
 
 import calculator.Positional

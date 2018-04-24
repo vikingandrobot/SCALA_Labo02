@@ -1,3 +1,9 @@
+/**
+  * File: Lexer.scala
+  * Modified by: Sathiya Kirushnapillai, Mathieu Monteverde, Michela Zucca
+  * Date: 24 avril 2018
+  */
+
 package calculator.lexer
 
 import scala.io.Source
@@ -22,6 +28,19 @@ class Lexer (source:Source) {
     } else {
       if (position == 0) nextChar
       position = source.pos
+
+      /**
+        * Here we match the current character with different pattern cases.
+        *
+        * You'll notice that the 'case x ...' and 'case y ...' used to detect
+        * the numbers and the keywords or variables don't use the method
+        * setToken. That is because the method readMultiple used to
+        * read said tokens finishes by calling nextChar, thus placing
+        * a character that does not belong to the current token being read inside
+        * the ch variable. We cannot call nextToken then because it will
+        * skip said character due to the fact that nextToken calls nextChar one to many time in
+        * that case.
+        */
       ch match {
         case ' ' => skipToken
         case '(' => setToken(LPAREN)
@@ -73,6 +92,7 @@ class Lexer (source:Source) {
     str
   }
 
+  /** Modified to throw an Error containing a message indicating the source of the error */
   def fatalError(msg: String): Nothing = {
     throw new Error(msg)
   }

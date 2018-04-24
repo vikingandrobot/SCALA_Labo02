@@ -1,3 +1,8 @@
+/**
+  * File: Positional.scala
+  * Date: 24 avril 2018
+  */
+
 package calculator
 
 trait Positional {
