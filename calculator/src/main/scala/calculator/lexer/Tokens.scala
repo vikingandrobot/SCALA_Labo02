@@ -26,6 +26,7 @@ object Tokens {
   case object POWER extends TokenInfo with TokenClass     // ^
   case object FACT extends TokenInfo with TokenClass      // factoriel
   case object GCD extends TokenInfo with TokenClass       // gcd
+  case object INVMOD extends TokenInfo with TokenClass       // gcd
   case object SQRT extends TokenInfo with TokenClass      // racine carré
 
   // Contrôles

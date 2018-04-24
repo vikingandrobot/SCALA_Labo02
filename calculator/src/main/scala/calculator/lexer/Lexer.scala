@@ -48,6 +48,7 @@ class Lexer (source:Source) {
     str.toLowerCase match {
       case "gcd" => GCD
       case "sqrt" => SQRT
+      case "invmod" => INVMOD
       case _ => ID(str)
     }
   }

@@ -124,6 +124,7 @@ class Parser(source:Source) extends Lexer(source:Source) {
       case NUM(x) => e = parseNum(x)
       case ID(x) => e = parseID(x)
       case GCD => e = parseGCD
+      case INVMOD => e = parseInvmod
       case SQRT => e = parseSQRT
       case _    => fatalError("Invalid token " + currentToken.toString)
     }
@@ -157,6 +158,16 @@ class Parser(source:Source) extends Lexer(source:Source) {
     val ret = parsePlusMinus
     eat(VIRG)
     val e = Gcd(ret, parsePlusMinus)
+    eat(RPAREN)
+    e
+  }
+
+  private def parseInvmod(): ExprTree = {
+    eat(INVMOD)
+    eat(LPAREN)
+    val ret = parsePlusMinus
+    eat(VIRG)
+    val e = InvMod(ret, parsePlusMinus)
     eat(RPAREN)
     e
   }

@@ -1,11 +1,11 @@
 package calculator.parser
 
 import calculator.Main.memory
-import calculator.lexer.Tokens.ID
 import calculator.utils.op
 import calculator.utils.gcd
 import calculator.utils.sqrt
 import calculator.utils.factorial
+import calculator.utils.modInvert
 
 object Trees {
 
@@ -20,6 +20,7 @@ object Trees {
       case Modulo(l, r) => op('%', l.compute, r.compute)
       case Power(l, r) => op('^', l.compute, r.compute)
       case Gcd(l, r) => gcd(l.compute.toInt, r.compute.toInt)
+      case InvMod(l, r) => modInvert(l.compute.toInt, r.compute.toInt)
       case Fact(l, Empty()) => factorial(l.compute.toInt)
       case Sqrt(l, Empty()) => sqrt(l.compute)
       case UnaryMinus(l, Empty()) => -(l.compute)
@@ -43,6 +44,7 @@ object Trees {
   case class Modulo(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Power(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Gcd(lhs: ExprTree, rhs: ExprTree) extends ExprTree
+  case class InvMod(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Fact(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class Sqrt(lhs: ExprTree, rhs: ExprTree) extends ExprTree
   case class UnaryMinus(lhs: ExprTree, rhs: ExprTree) extends ExprTree
