@@ -17,6 +17,9 @@ class Calculator(source: Source) extends Parser (source:Source) {
     *
     * If an error occurs such as the expression is not a legal expression, the Error
     * is caught and the message is displayed.
+    *
+    * Note:
+    *   Only the integer numbers are supported.
     */
   def execute(): Unit = {
     try {
